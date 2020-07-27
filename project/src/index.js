@@ -48,6 +48,18 @@ class Grid extends React.Component {
     );
   }
 }
+
+class Buttons extends React.Component {
+
+  render() {
+    return (
+      
+    )
+  }
+}
+
+
+
 class Main extends React.Component {
   constructor() {
     super();
@@ -97,7 +109,7 @@ class Main extends React.Component {
 
   stopButton = () => {
     clearInterval(this.intervalId);
-  }
+  };
 
   start = () => {
     let g = this.state.gridFull;
@@ -137,6 +149,13 @@ class Main extends React.Component {
     return (
       <div>
         <h1>The Game of Life</h1>
+        <Buttons
+          startButton={this.startButton}
+          stopButton={this.stopButton}
+          clear={this.clear}
+          seed={this.seed}
+          gridSize={this.gridSize}
+        />
         <Grid
           gridFull={this.state.gridFull}
           rows={this.rows}
