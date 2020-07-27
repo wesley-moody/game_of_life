@@ -79,8 +79,8 @@ class Main extends React.Component {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.rows; j++) {
         // randomly chosen boxes function
-        // 1/8 chance of each box starting turned on
-        if (Math.floor(Math.random() * 8) === 1) {
+        // 1/4 chance of each box starting turned on
+        if (Math.floor(Math.random() * 4) === 1) {
           gridCopy[i][j] = true;
         }
       }
@@ -90,8 +90,47 @@ class Main extends React.Component {
     });
   };
 
+  startButton = () => {
+    clearInterval(this.intervalId);
+    this.intervalId = setInterval(this.start, this.speed);
+  };
+
+  stopButton = () => {
+    clearInterval(this.intervalId);
+  }
+
+  start = () => {
+    let g = this.state.gridFull;
+    let g2 = arrayClone(this.state.gridFull);
+
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.rows; j++) {
+        let count = 0;
+        // 8 possible neighbors being checked
+        if (i > 0) if (g[i - 1][j]) count++;
+        if (i > 0 && j > 0) if (g[i - 1][j - 1]) count++;
+        if (i > 0 && j < this.cols - 1) if (g[i - 1][j + 1]) count++;
+        if (j < this.cols - 1) if (g[i][j + 1]) count++;
+        if (j > 0) if (g[i][j - 1]) count++;
+        if (i < this.rows - 1) if (g[i + 1][j]) count++;
+        if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
+        if (i < this.rows - 1 && j < this.cols - 1)
+          if (g[i + 1][j + 1]) count++;
+        // if alive and less than 2 or more than 3 neighbors it dies
+        if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
+        // if dead cell has exactly 3 neighbors it's born
+        if (!g[i][j] && count === 3) g2[i][j] = true;
+      }
+    }
+    this.setState({
+      gridFull: g2,
+      generation: this.state.generation + 1,
+    });
+  };
+
   componentDidMount() {
     this.seed();
+    this.startButton();
   }
 
   render() {
@@ -116,7 +155,7 @@ function arrayClone(arr) {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Main />
+    <Main />,
   </React.StrictMode>,
   document.getElementById("root")
 );
