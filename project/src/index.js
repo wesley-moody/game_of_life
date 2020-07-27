@@ -64,6 +64,36 @@ class Main extends React.Component {
     };
   }
 
+  // Method for changing state onClick
+  selectBox = (row, col) => {
+    let gridCopy = arrayClone(this.state.gridFull);
+    gridCopy[row][col] = !gridCopy[row][col];
+    this.setState({
+      gridFull: gridCopy,
+    });
+  };
+
+  // Method for seeding or beginning with random filled in boxes
+  seed = () => {
+    let gridCopy = arrayClone(this.state.gridFull);
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.rows; j++) {
+        // randomly chosen boxes function
+        // 1/8 chance of each box starting turned on
+        if (Math.floor(Math.random() * 8) === 1) {
+          gridCopy[i][j] = true;
+        }
+      }
+    }
+    this.setState({
+      gridFull: gridCopy,
+    });
+  };
+
+  componentDidMount() {
+    this.seed();
+  }
+
   render() {
     return (
       <div>
@@ -78,6 +108,10 @@ class Main extends React.Component {
       </div>
     );
   }
+}
+
+function arrayClone(arr) {
+  return JSON.parse(JSON.stringify(arr));
 }
 
 ReactDOM.render(
