@@ -20,7 +20,7 @@ class Box extends React.Component {
 
 class Grid extends React.Component {
   render() {
-    const width = this.props.cols * 14;
+    const width = this.props.cols * 16;
     var rowsArr = [];
 
     var boxClass = "";
@@ -64,6 +64,9 @@ class Buttons extends React.Component {
           </button>
           <button className='btn btn-default' onClick={this.props.stopButton}>
             Stop
+          </button>
+          <button className='btn btn-default' onClick={this.props.slow}>
+            Slow
           </button>
           <button className='btn btn-default' onClick={this.props.clear}>
             Clear
@@ -136,13 +139,45 @@ class Main extends React.Component {
     clearInterval(this.intervalId);
   };
 
+  slow = () => {
+    this.speed = 1000;
+    this.startButton();
+  };
+
+  clear = () => {
+    var grid = Array(this.rows)
+      .fill()
+      .map(() => Array(this.cols).fill(false));
+    this.setState({
+      gridFull: grid,
+      generation: 0,
+    });
+  };
+
+  gridSize = (size) => {
+    switch (size) {
+      case "1":
+        this.cols = 20;
+        this.rows = 10;
+        break;
+      case "2":
+        this.cols = 50;
+        this.rows = 30;
+        break;
+      default:
+        this.cols = 70;
+        this.rows = 50;
+    }
+    this.clear();
+  };
+
   start = () => {
     let g = this.state.gridFull;
     let g2 = arrayClone(this.state.gridFull);
 
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.rows; j++) {
-        let count = 0;
+        let count = 0; // number of neighbors a cell has
         // 8 possible neighbors being checked
         if (i > 0) if (g[i - 1][j]) count++;
         if (i > 0 && j > 0) if (g[i - 1][j - 1]) count++;
@@ -177,6 +212,7 @@ class Main extends React.Component {
         <Buttons
           startButton={this.startButton}
           stopButton={this.stopButton}
+          slow={this.slow}
           clear={this.clear}
           seed={this.seed}
           gridSize={this.gridSize}
