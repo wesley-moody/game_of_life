@@ -1,5 +1,7 @@
 body {
-  background-image: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/squares.png);
+  background-image: url(https://images.unsplash.com/photo-1515462277126-2dd0c162007a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60);
+  background-attachment: fixed;  
+  background-size: cover;
 }
 
 .btn {
@@ -55,5 +57,5 @@ h4 {
 }
 
 h4 {
-  margin-top: 0px;
+  margin-top: 1rem;
 }

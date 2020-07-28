@@ -91,7 +91,7 @@ class Buttons extends React.Component {
 class Main extends React.Component {
   constructor() {
     super();
-    this.speed = 100;
+    this.speed = 150;
     this.rows = 30;
     this.cols = 50;
 
@@ -224,7 +224,7 @@ class Main extends React.Component {
           cols={this.cols}
           selectBox={this.selectBox}
         />
-        <h2>Generations: {this.state.generation}</h2>
+        <h4>Generations: {this.state.generation}</h4>
       </div>
     );
   }
