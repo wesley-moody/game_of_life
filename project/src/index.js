@@ -12,7 +12,7 @@ class Box extends React.Component {
       <div
         className={this.props.boxClass}
         id={this.props.id}
-        onClick={this.selectBox}
+        onMouseOver={this.selectBox}
       />
     );
   }
@@ -148,6 +148,7 @@ class Main extends React.Component {
     var grid = Array(this.rows)
       .fill()
       .map(() => Array(this.cols).fill(false));
+    clearInterval(this.intervalId);
     this.setState({
       gridFull: grid,
       generation: 0,
