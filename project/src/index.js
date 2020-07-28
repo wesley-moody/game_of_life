@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import { ButtonToolbar, Dropdown, DropdownButton } from "react-bootstrap";
 
 class Box extends React.Component {
   selectBox = () => {
@@ -19,7 +20,7 @@ class Box extends React.Component {
 
 class Grid extends React.Component {
   render() {
-    const width = this.props.cols * 16 + 1;
+    const width = this.props.cols * 14;
     var rowsArr = [];
 
     var boxClass = "";
@@ -50,15 +51,39 @@ class Grid extends React.Component {
 }
 
 class Buttons extends React.Component {
+  handleSelect = (evt) => {
+    this.props.gridSize(evt);
+  };
 
   render() {
     return (
-      
-    )
+      <div className='center'>
+        <ButtonToolbar>
+          <button className='btn btn-default' onClick={this.props.startButton}>
+            Start
+          </button>
+          <button className='btn btn-default' onClick={this.props.stopButton}>
+            Stop
+          </button>
+          <button className='btn btn-default' onClick={this.props.clear}>
+            Clear
+          </button>
+          <button className='btn btn-default' onClick={this.props.seed}>
+            Seed
+          </button>
+          <DropdownButton
+            title='Grid Size'
+            id='size-menu'
+            onSelect={this.handleSelect}>
+            <Dropdown.Item eventKey='1'>20x10</Dropdown.Item>
+            <Dropdown.Item eventKey='2'>50x30</Dropdown.Item>
+            <Dropdown.Item eventKey='3'>70x50</Dropdown.Item>
+          </DropdownButton>
+        </ButtonToolbar>
+      </div>
+    );
   }
 }
-
-
 
 class Main extends React.Component {
   constructor() {

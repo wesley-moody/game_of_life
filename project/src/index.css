@@ -2,6 +2,12 @@ body {
   background-image: url(http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/squares.png);
 }
 
+.btn {
+  background-color: dodgerblue;
+  color: white;
+  margin-left: 1rem;
+}
+
 .box {
   display: inline-block;
   border: 1px solid black;
