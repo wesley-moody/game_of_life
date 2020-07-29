@@ -12,7 +12,7 @@ class Box extends React.Component {
       <div
         className={this.props.boxClass}
         id={this.props.id}
-        onMouseOver={this.selectBox}
+        onClick={this.selectBox}
       />
     );
   }
@@ -20,12 +20,12 @@ class Box extends React.Component {
 
 class Grid extends React.Component {
   render() {
-    const width = this.props.cols * 16;
+    const width = this.props.cols * 14;
     var rowsArr = [];
 
     var boxClass = "";
     for (var i = 0; i < this.props.rows; i++) {
-      for (var j = 0; j < this.props.rows; j++) {
+      for (var j = 0; j < this.props.cols; j++) {
         let boxId = i + "_" + j;
 
         boxClass = this.props.gridFull[i][j] ? "box on" : "box off";
@@ -117,7 +117,7 @@ class Main extends React.Component {
   seed = () => {
     let gridCopy = arrayClone(this.state.gridFull);
     for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.rows; j++) {
+      for (let j = 0; j < this.cols; j++) {
         // randomly chosen boxes function
         // 1/4 chance of each box starting turned on
         if (Math.floor(Math.random() * 4) === 1) {
@@ -177,7 +177,7 @@ class Main extends React.Component {
     let g2 = arrayClone(this.state.gridFull);
 
     for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.rows; j++) {
+      for (let j = 0; j < this.cols; j++) {
         let count = 0; // number of neighbors a cell has
         // 8 possible neighbors being checked
         if (i > 0) if (g[i - 1][j]) count++;
