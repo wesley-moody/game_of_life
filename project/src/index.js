@@ -12,7 +12,7 @@ class Box extends React.Component {
       <div
         className={this.props.boxClass}
         id={this.props.id}
-        onMouseOver={this.selectBox}
+        onClick={this.selectBox}
       />
     );
   }
@@ -25,7 +25,7 @@ class Grid extends React.Component {
 
     var boxClass = "";
     for (var i = 0; i < this.props.rows; i++) {
-      for (var j = 0; j < this.props.rows; j++) {
+      for (var j = 0; j < this.props.cols; j++) {
         let boxId = i + "_" + j;
 
         boxClass = this.props.gridFull[i][j] ? "box on" : "box off";
@@ -51,25 +51,28 @@ class Grid extends React.Component {
 }
 
 class Buttons extends React.Component {
-  handleSelect = (evt) => {
-    this.props.gridSize(evt);
+  handleSelect = (e) => {
+    this.props.gridSize(e);
   };
 
   render() {
     return (
-      <div className='center'>
+      <div className='controls'>
         <ButtonToolbar>
           <button className='btn btn-default' onClick={this.props.startButton}>
             Start
           </button>
-          <button className='btn btn-default' onClick={this.props.stopButton}>
-            Stop
+          <button className='btn btn-default' onClick={this.props.pauseButton}>
+            Pause
+          </button>
+          <button className='btn btn-default' onClick={this.props.reset}>
+            Reset
           </button>
           <button className='btn btn-default' onClick={this.props.slow}>
             Slow
           </button>
-          <button className='btn btn-default' onClick={this.props.clear}>
-            Clear
+          <button className='btn btn-default' onClick={this.props.fast}>
+            Fast
           </button>
           <button className='btn btn-default' onClick={this.props.seed}>
             Seed
@@ -117,9 +120,9 @@ class Main extends React.Component {
   seed = () => {
     let gridCopy = arrayClone(this.state.gridFull);
     for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.rows; j++) {
+      for (let j = 0; j < this.cols; j++) {
         // randomly chosen boxes function
-        // 1/4 chance of each box starting turned on
+        // 1/4 chance for each box to start on
         if (Math.floor(Math.random() * 4) === 1) {
           gridCopy[i][j] = true;
         }
@@ -135,16 +138,11 @@ class Main extends React.Component {
     this.intervalId = setInterval(this.start, this.speed);
   };
 
-  stopButton = () => {
+  pauseButton = () => {
     clearInterval(this.intervalId);
   };
 
-  slow = () => {
-    this.speed = 1000;
-    this.startButton();
-  };
-
-  clear = () => {
+  reset = () => {
     var grid = Array(this.rows)
       .fill()
       .map(() => Array(this.cols).fill(false));
@@ -153,6 +151,16 @@ class Main extends React.Component {
       gridFull: grid,
       generation: 0,
     });
+  };
+
+  slow = () => {
+    this.speed = 1000;
+    this.startButton();
+  };
+
+  fast = () => {
+    this.speed = 200;
+    this.startButton();
   };
 
   gridSize = (size) => {
@@ -169,7 +177,7 @@ class Main extends React.Component {
         this.cols = 70;
         this.rows = 50;
     }
-    this.clear();
+    this.reset();
   };
 
   start = () => {
@@ -212,9 +220,10 @@ class Main extends React.Component {
         <h1>The Game of Life</h1>
         <Buttons
           startButton={this.startButton}
-          stopButton={this.stopButton}
+          pauseButton={this.pauseButton}
+          reset={this.reset}
           slow={this.slow}
-          clear={this.clear}
+          fast={this.fast}
           seed={this.seed}
           gridSize={this.gridSize}
         />
