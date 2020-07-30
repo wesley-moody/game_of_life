@@ -20,7 +20,7 @@ class Box extends React.Component {
 
 class Grid extends React.Component {
   render() {
-    const width = this.props.cols * 14;
+    let width = this.props.cols * 14;
     var rowsArr = [];
 
     var boxClass = "";
@@ -216,7 +216,27 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id='body'>
+        <span id='rules' title='rules'>
+          R*U*L*E*S
+          <ol>
+            1. Any live cell with fewer than two live neighbours dies, as if by
+            underpopulation.
+          </ol>
+          <ol>
+            2. Any live cell with two or three live neighbours lives on to the
+            next generation.
+          </ol>
+          <ol>
+            3. Any live cell with more than three live neighbours dies, as if by
+            overpopulation.
+          </ol>
+          <ol>
+            4. Any dead cell with exactly three live neighbours becomes a live
+            cell, as if by reproduction.
+          </ol>
+        </span>
+
         <h1>The Game of Life</h1>
         <Buttons
           startButton={this.startButton}
