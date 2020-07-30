@@ -209,7 +209,7 @@ class Main extends React.Component {
   render() {
     return (
       <div id='body'>
-        <span id='rules' title='rules'>
+        <span id='rules'>
           R*U*L*E*S
           <ol>
             1. Any live cell with fewer than two live neighbours dies, as if by
