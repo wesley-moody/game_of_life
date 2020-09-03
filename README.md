@@ -23,3 +23,4 @@ The initial pattern constitutes the seed of the system. The first generation is 
 Interested in learning more about John Conway's Game of life?
 https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
+#### Deployed on the dynamic Vercel.com platform! 
